@@ -1,0 +1,23 @@
+CREATE TABLE Persons
+(
+PersonID INT NOT NULL,
+FirstName VARCHAR(50) NOT NULL,
+Salary FLOAT NOT NULL,
+PassportID INT NOT NULL UNIQUE
+)
+
+CREATE TABLE Passports
+(
+PassportID INT NOT NULL,
+PassportNumber VARCHAR(50) NOT NULL
+)
+
+ALTER TABLE Persons
+ADD CONSTRAINT PK_Persons PRIMARY KEY (PersonID)
+
+ALTER TABLE Passports
+ADD CONSTRAINT PK_Passports PRIMARY KEY (PassportID)
+
+ALTER TABLE Persons
+ADD CONSTRAINT FK_Persons_Passports FOREIGN KEY (PassportID)
+REFERENCES Passports(PassportID)

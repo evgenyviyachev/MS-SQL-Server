@@ -1,0 +1,8 @@
+INSERT INTO RoomTypes
+VALUES('double',NULL)
+
+INSERT INTO RoomTypes
+VALUES('suit',NULL)
+
+INSERT INTO RoomTypes
+VALUES('single',NULL)

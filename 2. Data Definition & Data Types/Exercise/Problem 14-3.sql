@@ -1,0 +1,8 @@
+INSERT INTO Cars
+VALUES('AB2456PP','Elegant','E200',1998,1,4,NULL,'Good',1)
+
+INSERT INTO Cars
+VALUES('CB1426PP','Classic','E200',1998,2,4,NULL,'Satisfactory',1)
+
+INSERT INTO Cars
+VALUES('CB7777CA','Avangarte','E200',1998,3,4,NULL,'Perfect',0)

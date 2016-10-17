@@ -1,0 +1,63 @@
+CREATE TABLE Categories
+(
+[Id] INT IDENTITY(1,1) PRIMARY KEY,
+[Category] VARCHAR(50) NOT NULL,
+[DailyRate] FLOAT NOT NULL,
+[WeeklyRate] FLOAT NOT NULL,
+[MonthlyRate] FLOAT NOT NULL,
+[WeekendRate] FLOAT NOT NULL
+)
+
+CREATE TABLE Cars
+(
+[Id] INT IDENTITY(1,1) PRIMARY KEY,
+[PlateNumber] VARCHAR(50) NOT NULL,
+[Make] VARCHAR(50) NOT NULL,
+[Model] VARCHAR(50) NOT NULL,
+[CarYear] INT NOT NULL,
+[CategoryId] INT NOT NULL,
+[Doors] INT NOT NULL,
+[Picture] IMAGE,
+[Condition] VARCHAR(50),
+[Available] BIT NOT NULL
+)
+
+CREATE TABLE Employees
+(
+[Id] INT IDENTITY(1,1) PRIMARY KEY,
+[FirstName] VARCHAR(50) NOT NULL,
+[LastName] VARCHAR(50) NOT NULL,
+[Title] VARCHAR(50),
+[Notes] TEXT
+)
+
+CREATE TABLE Customers
+(
+[Id] INT IDENTITY(1,1) PRIMARY KEY,
+[DriverLiscenceNumber] VARCHAR(50) NOT NULL,
+[FullName] VARCHAR(100) NOT NULL,
+[Address] VARCHAR(50) NOT NULL,
+[City] VARCHAR(50) NOT NULL,
+[ZIPCode] INT,
+[Notes] TEXT
+)
+
+CREATE TABLE RentalOrders
+(
+[Id] INT IDENTITY(1,1) PRIMARY KEY,
+[EmployeeId] INT NOT NULL,
+[CustomerId] INT NOT NULL,
+[CarId] INT NOT NULL,
+[CarCondition] VARCHAR(50),
+[TankLevel] VARCHAR(50),
+[KilometrageStart] BIGINT NOT NULL,
+[KilometrageEnd] BIGINT NOT NULL,
+[TotalKilometrage] BIGINT NOT NULL,
+[StartDate] DATE NOT NULL,
+[EndDate] DATE NOT NULL,
+[TotalDays] INT NOT NULL,
+[RateApplied] FLOAT NOT NULL,
+[TaxRate] FLOAT NOT NULL,
+[OrderStatus] VARCHAR(20) NOT NULL,
+[Notes] TEXT
+)

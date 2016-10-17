@@ -1,0 +1,19 @@
+CREATE FUNCTION ufn_CashInUsersGames(@GameName VARCHAR(MAX))
+	RETURNS @TEMP TABLE(SumCash MONEY)
+	AS BEGIN
+			DECLARE @MyTABLE TABLE (SumCash MONEY)
+			INSERT INTO @MyTABLE
+			SELECT SUM(OddRowsTable.Cash) FROM
+					(SELECT *, ROW_NUMBER() OVER(ORDER BY Cash DESC) AS r FROM
+					(SELECT g.Name, ug.Cash, u.Username
+						FROM Games g
+						INNER JOIN UsersGames ug
+						ON ug.GameId = g.Id
+						INNER JOIN Users u
+						ON u.Id = ug.UserId
+						WHERE g.Name = @GameName) AS t) AS OddRowsTable
+						WHERE OddRowsTable.r % 2 = 1
+			INSERT INTO @TEMP
+			SELECT SumCash FROM @MyTABLE
+			RETURN
+	END

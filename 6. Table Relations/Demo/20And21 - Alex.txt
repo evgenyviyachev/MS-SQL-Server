@@ -1,0 +1,53 @@
+20. Highest Peak and Longest River by Country
+
+SELECT TOP 5 c.CountryName, MAX(p.Elevation) AS HighestPeakElevation, MAX(r.Length) AS LongestRiverLength	
+	FROM Countries c
+	FULL JOIN MountainsCountries mc
+	ON mc.CountryCode = c.CountryCode
+	FULL JOIN Mountains m
+	ON m.Id = mc.MountainId
+	FULL JOIN Peaks p
+	ON p.MountainId = m.Id
+	FULL JOIN CountriesRivers cr
+	ON cr.CountryCode = c.CountryCode
+	FULL JOIN Rivers r
+	ON r.Id = cr.RiverId
+	GROUP BY c.CountryName
+	ORDER BY HighestPeakElevation DESC, LongestRiverLength	DESC, c.CountryName
+	
+=================================================
+
+21. Highest Peak Name and Elevation by Country
+
+WITH MyTable AS(
+	SELECT c.CountryName, p.PeakName, p.Elevation, m.MountainRange
+	  FROM Countries c
+	  LEFT JOIN MountainsCountries
+		ON c.CountryCode = MountainsCountries.CountryCode
+	  LEFT JOIN Mountains m
+		ON m.Id = MountainsCountries.MountainId
+	  LEFT JOIN Peaks p
+		ON p.MountainId = m.Id)
+
+SELECT TOP 5
+	  CountryName,
+      PeakName = CASE 
+					WHEN PeakName IS NULL THEN '(no highest peak)'
+					ELSE PeakName 
+				 END,
+	  Elevation = CASE
+	                WHEN Elevation = 0 OR Elevation IS NULL THEN 0
+					ELSE Elevation
+				  END,
+	  MountainsRange = CASE
+						WHEN MountainRange IS NULL THEN '(no mountain)'
+						ELSE MountainRange
+					   END
+	  
+  FROM(
+	SELECT CountryName, PeakName, Elevation, MountainRange, RANK() OVER (PARTITION BY CountryName ORDER BY MyTable.Elevation DESC) AS Rnk
+		FROM MyTable) AS t
+ WHERE t.Rnk = 1
+ ORDER BY CountryName, MountainRange
+	
+=================================================
